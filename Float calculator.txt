@@ -1,0 +1,122 @@
+#include "stdafx.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+
+
+void printInstructions();
+float add(float i1, float i2);
+float subtract (float i1, float i2);
+float multiply (float i1, float i2);
+float divide(float i1, float i2);
+
+
+void main()
+{
+	
+	int len = 0;
+	int i = 0;
+	int op = 0; /* type of operator found */
+	int j = 0; /* position of operator in string */
+	char arg1[20], arg2[20];
+	float param1,param2, result;
+
+	char str1[80];
+
+	/* Print out the instructions */
+	printInstructions();
+
+	/* Get the input string */
+	gets(str1);
+
+	/* Parse the string to find the operator and the arguments */
+	len = strlen(str1);
+	for (i=0;i<len;i++)
+	{
+		if (str1[i] == '+') { op = 1; j = i;}
+		if (str1[i] == '-') { op = 2; j = i;}
+		if (str1[i] == '*') { op = 3; j = i;}
+		if (str1[i] == '/') { op = 4; j = i;}
+	}
+
+	/* found legitimate operator */
+	/* get first integer parameter */
+	if (op > 0)
+	{
+		strncpy(arg1,str1,j);
+		arg1[j] = '\0';
+		param1 = atof(arg1);
+
+		/* get second integer parameter */
+		for (i=j+1;i<=len;i++)
+		{
+			arg2[i-j-1] = str1[i];
+		}
+		
+		/*convert to integer */
+		param2 = atof(arg2);
+	}
+
+
+	switch(op)
+	{
+		case(1):
+			result = add(param1,param2);
+			break;
+		case(2):
+			result = subtract(param1,param2);
+			break;
+		case(3):
+			result = multiply(param1,param2);
+			break;
+		case(4):
+			result = divide(param1,param2);
+			break;
+		default:
+			return;
+			break;
+	}
+
+	printf("%s = %.2f \n", str1, result);
+
+}
+
+
+
+void printInstructions()
+{
+
+	puts ("Calculator: Enter the sum and press enter");
+	puts("---------------");
+	puts ("Examples");
+	puts("9*7");
+	puts("123+456");
+	puts("34-78");
+	puts("45/9");
+	puts("Enter choice:");
+	return;
+
+}
+
+
+
+float add(float i1, float i2)
+{
+	return i1 + i2;
+}
+
+float subtract (float i1, float i2)
+{
+	return i1 - i2;
+}
+
+float multiply (float i1, float i2)
+{
+	return i1*i2;
+}
+
+float divide(float i1, float i2)
+{
+	return i1/i2;
+}
